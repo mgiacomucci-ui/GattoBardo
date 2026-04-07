@@ -1,0 +1,461 @@
+import React, { useState } from 'react';
+import { 
+  Wifi, Thermometer, Recycle, Coffee, Microwave, 
+  Refrigerator, Wind, Flame, CheckCircle2, 
+  AlertTriangle, Phone, Power, Droplet, 
+  WashingMachine, Info, Lock
+} from 'lucide-react';
+
+const App = () => {
+  const [lang, setLang] = useState('it');
+
+  // Dati tradotti per le quattro lingue (IT, DE, FR, EN)
+  const data = {
+    it: {
+      langName: "Italiano",
+      flag: "🇮🇹",
+      title: "Tovo San Giacomo: Home OS",
+      welcome: "Benvenuti nella vostra casa vacanze!",
+      welcomeText: "Siamo entusiasti di ospitarvi. Abbiamo progettato questa guida rapida come una dashboard, per aiutarvi a connettervi, gestire il clima e navigare in casa all'istante per un soggiorno senza pensieri.",
+      online: "Online",
+      network: "Connettività e Supporto",
+      ssid: "Nome Rete (SSID)",
+      pass: "Password",
+      support: "Assistenza ed Emergenze",
+      supportText: "Contattateci per problemi immediati al sistema (es. perdite d'acqua, guasti elettrici).",
+      alertTitle: "Allerta Critica: Limite 3kW",
+      alertText: "La casa opera con un limite rigoroso di 3kW. Scaglionare l'uso di elettrodomestici ad alto assorbimento per evitare che salti la corrente.",
+      highLoad: "Alto Carico",
+      overload: "Sovraccarico (Blackout)",
+      beverage: "Sistemi Bevande",
+      coffeeTitle: "Macchina Nescafé",
+      coffeeText: "1. Controllare acqua. 2. Alzare leva, inserire capsula, chiudere. 3. Selezionare volume o leva su ROSSO. Rimuovere capsula usata.",
+      kettleTitle: "Bollitore Elettrico",
+      kettleText: "Riempire con acqua (non superare la linea MAX). Spegnimento automatico a ebollizione.",
+      cooking: "Cottura e Sicurezza",
+      stoveTitle: "Fornello a Gas",
+      stoveText: "1. Premere e ruotare su fiamma grande. 2. Tenere premuto 3-5 sec per la valvola di sicurezza. 3. Riportare su '0' a fine cottura.",
+      microTitle: "Microonde",
+      microText: "Usa solo contenitori adatti. Ideale per riscaldare velocemente senza sovraccaricare l'impianto elettrico.",
+      cleaning: "Conservazione e Pulizia",
+      fridgeTitle: "Frigorifero Beko",
+      fridgeText: "Pre-calibrato. Non regolare il termostato interno e assicurarsi di chiudere bene la porta.",
+      dishTitle: "Lavastoviglie IKEA",
+      dishText: "Inserire la pastiglia. Programma consigliato: ECO (minimizza consumi idrici ed elettrici).",
+      laundry: "Lavatrice HiSense",
+      laundryText: "1. Aggiungere detersivo. 2. Programma Quick/Daily 30/40°C. 3. Avviare. Allerta: attendere 2 minuti a fine ciclo prima di aprire l'oblò.",
+      climate: "Controllo Ambientale",
+      acTitle: "Aria Condizionata",
+      acText: "Spegnere l'aria condizionata quando si esce e tenere le finestre chiuse. Il sistema raffredda lo spazio molto velocemente!",
+      heatTitle: "Riscaldamento Smart",
+      heatText: "Gestito dal termostato Wi-Fi a muro. Raccomandiamo 20°C per un bilancio ottimale tra comfort ed efficienza energetica.",
+      waste: "Gestione Rifiuti (Porta a Porta)",
+      wasteText: "Separazione obbligatoria. Rispettare i calendari per evitare multe.",
+      wYellow: "Plastica e Metalli",
+      wBlue: "Carta e Cartone",
+      wBrown: "Umido / Organico",
+      wGrey: "Secco Indifferenziato",
+      wGreen: "Vetro (Campane in strada)",
+      checkoutTitle: "Log-Out e Partenza",
+      checkoutTime: "Check-out: 10:00",
+      c1: "Spegnere tutto: Luci, Aria, Gas.",
+      c2: "Rimuovere tutti i rifiuti dalla casa.",
+      c3: "Non lasciare piatti sporchi (avviare lavastoviglie).",
+      c4: "Lasciare le chiavi e chiudere bene la porta."
+    },
+    en: {
+      langName: "English",
+      flag: "🇬🇧",
+      title: "Tovo San Giacomo: Home OS",
+      welcome: "Welcome to your Holiday Home!",
+      welcomeText: "We are thrilled to host you. We've designed this quick-start guide as a dashboard to help you connect, manage the climate, and navigate the home instantly for a worry-free stay.",
+      online: "Online",
+      network: "Connectivity & Support",
+      ssid: "Network Name (SSID)",
+      pass: "Password",
+      support: "Assistance & Emergencies",
+      supportText: "Contact us for any immediate system issues (e.g., water leaks, electrical faults).",
+      alertTitle: "Critical Alert: 3kW Limit",
+      alertText: "The house operates on a strict 3kW power limit. Please stagger the use of high-draw appliances to prevent the power from tripping.",
+      highLoad: "High Load",
+      overload: "System Overload (Blackout)",
+      beverage: "Beverage Systems",
+      coffeeTitle: "Nescafé Machine",
+      coffeeText: "1. Check water. 2. Lift lever, insert capsule, close. 3. Select volume or lever to RED. Remove used capsule.",
+      kettleTitle: "Electric Kettle",
+      kettleText: "Fill with water (do not exceed MAX line). Automatic shut-off upon boiling.",
+      cooking: "Cooking & Safety",
+      stoveTitle: "Gas Stove",
+      stoveText: "1. Press and turn to large flame. 2. Hold for 3-5 sec (safety valve). 3. Return to '0' when finished.",
+      microTitle: "Microwave",
+      microText: "Use only microwave-safe containers. Ideal for quick heating without overloading the system.",
+      cleaning: "Storage & Cleaning",
+      fridgeTitle: "Beko Refrigerator",
+      fridgeText: "Pre-calibrated. Please do not adjust the internal thermostat and ensure the door is closed tightly.",
+      dishTitle: "IKEA Dishwasher",
+      dishText: "Insert tablet. Recommended program: ECO (minimizes water and energy consumption).",
+      laundry: "HiSense Washing Machine",
+      laundryText: "1. Add detergent. 2. Quick/Daily 30/40°C program. 3. Start. Alert: wait 2 mins at the end of the cycle before opening the door.",
+      climate: "Climate Control",
+      acTitle: "Air Conditioning",
+      acText: "Turn off AC when leaving and keep windows closed. The system cools the space incredibly fast!",
+      heatTitle: "Smart Heating",
+      heatText: "Managed via Wi-Fi wall thermostat. We recommend 20°C for the optimal balance of comfort and efficiency.",
+      waste: "Waste Management (Door to Door)",
+      wasteText: "Mandatory separation. Please respect the calendars to avoid fines.",
+      wYellow: "Plastics & Metals",
+      wBlue: "Paper & Cardboard",
+      wBrown: "Organic / Food waste",
+      wGrey: "General Waste",
+      wGreen: "Glass (Street containers)",
+      checkoutTitle: "System Log-Out & Departure",
+      checkoutTime: "Check-out: 10:00",
+      c1: "Turn off everything: Lights, AC, Gas.",
+      c2: "Remove all waste from the house.",
+      c3: "Do not leave dirty dishes (start dishwasher).",
+      c4: "Leave keys and close the door securely."
+    },
+    de: {
+      langName: "Deutsch",
+      flag: "🇩🇪",
+      title: "Tovo San Giacomo: Home OS",
+      welcome: "Willkommen in Ihrem Ferienhaus!",
+      welcomeText: "Wir freuen uns, Sie als Gäste zu haben. Diese Kurzanleitung ist wie ein Dashboard gestaltet, damit Sie sich sofort verbinden, das Klima steuern und sich zurechtfinden können.",
+      online: "Online",
+      network: "Konnektivität & Support",
+      ssid: "Netzwerkname (SSID)",
+      pass: "Passwort",
+      support: "Hilfe & Notfälle",
+      supportText: "Kontaktieren Sie uns bei sofortigen Problemen (z. B. Wasserlecks, Stromausfälle).",
+      alertTitle: "Kritischer Alarm: 3kW Limit",
+      alertText: "Das Haus hat ein strenges 3-kW-Limit. Bitte versetzen Sie die Nutzung von Geräten mit hohem Stromverbrauch, um Stromausfälle zu vermeiden.",
+      highLoad: "Hohe Last",
+      overload: "Systemüberlastung",
+      beverage: "Getränkesysteme",
+      coffeeTitle: "Nescafé Maschine",
+      coffeeText: "1. Wasser prüfen. 2. Hebel anheben, Kapsel einlegen. 3. Menge wählen oder Hebel auf ROT. Gebrauchte Kapsel entfernen.",
+      kettleTitle: "Wasserkocher",
+      kettleText: "Wasser einfüllen (MAX-Linie nicht überschreiten). Automatische Abschaltung.",
+      cooking: "Kochen & Sicherheit",
+      stoveTitle: "Gasherd",
+      stoveText: "1. Drücken und auf große Flamme drehen. 2. 3-5 Sek. gedrückt halten (Sicherheitsventil). 3. Nach dem Kochen auf '0' stellen.",
+      microTitle: "Mikrowelle",
+      microText: "Nur mikrowellengeeignete Behälter. Ideal zum schnellen Aufwärmen ohne Stromüberlastung.",
+      cleaning: "Lagerung & Reinigung",
+      fridgeTitle: "Beko Kühlschrank",
+      fridgeText: "Vorkalibriert. Bitte Thermostat nicht verstellen und Tür fest schließen.",
+      dishTitle: "IKEA Geschirrspüler",
+      dishText: "Tab einlegen. Empfohlen: ECO-Programm (spart Wasser und Energie).",
+      laundry: "HiSense Waschmaschine",
+      laundryText: "1. Waschmittel rein. 2. Quick/Daily 30/40°C. 3. Starten. Warnung: Nach Zyklusende 2 Min. warten, bis Tür entriegelt.",
+      climate: "Klimasteuerung",
+      acTitle: "Klimaanlage",
+      acText: "Bitte AC beim Verlassen ausschalten, Fenster geschlossen halten. Kühlt sehr schnell!",
+      heatTitle: "Smartes Heizen",
+      heatText: "Gesteuert über Wi-Fi-Wandthermostat. 20°C empfohlen für optimale Effizienz.",
+      waste: "Mülltrennung (Tür-zu-Tür)",
+      wasteText: "Trennung ist Pflicht. Kalender beachten, um Strafen zu vermeiden.",
+      wYellow: "Plastik & Metall",
+      wBlue: "Papier & Karton",
+      wBrown: "Bioabfall",
+      wGrey: "Restmüll",
+      wGreen: "Glas (Straßencontainer)",
+      checkoutTitle: "System-Log-out & Abreise",
+      checkoutTime: "Check-out: 10:00",
+      c1: "Alles ausschalten: Licht, AC, Gas.",
+      c2: "Gesamten Müll entsorgen.",
+      c3: "Kein schmutziges Geschirr (Spüler starten).",
+      c4: "Schlüssel hinterlassen und Tür schließen."
+    },
+    fr: {
+      langName: "Français",
+      flag: "🇫🇷",
+      title: "Tovo San Giacomo : Home OS",
+      welcome: "Bienvenue dans votre maison !",
+      welcomeText: "Nous sommes ravis de vous accueillir. Ce guide rapide est conçu comme un tableau de bord pour vous aider à vous connecter et gérer la maison instantanément.",
+      online: "En ligne",
+      network: "Connectivité & Support",
+      ssid: "Nom du réseau (SSID)",
+      pass: "Mot de passe",
+      support: "Assistance et Urgences",
+      supportText: "Contactez-nous pour tout problème immédiat (ex. fuites d'eau, pannes électriques).",
+      alertTitle: "Alerte Critique : Limite 3kW",
+      alertText: "La maison a une limite stricte de 3kW. Veuillez décaler l'utilisation des gros appareils pour éviter de faire sauter le disjoncteur.",
+      highLoad: "Charge Élevée",
+      overload: "Surcharge (Coupure)",
+      beverage: "Systèmes de Boissons",
+      coffeeTitle: "Machine Nescafé",
+      coffeeText: "1. Vérifier l'eau. 2. Soulever levier, insérer capsule. 3. Choisir volume ou levier sur ROUGE. Retirer la capsule.",
+      kettleTitle: "Bouilloire",
+      kettleText: "Remplir d'eau (ne pas dépasser MAX). Arrêt automatique.",
+      cooking: "Cuisson & Sécurité",
+      stoveTitle: "Cuisinière à Gaz",
+      stoveText: "1. Appuyer et tourner sur grande flamme. 2. Maintenir 3-5 sec (vanne de sécurité). 3. Remettre sur '0' après.",
+      microTitle: "Micro-ondes",
+      microText: "Récipients adaptés uniquement. Idéal pour réchauffer sans surcharger le système.",
+      cleaning: "Stockage et Nettoyage",
+      fridgeTitle: "Réfrigérateur Beko",
+      fridgeText: "Pré-calibré. Ne pas ajuster le thermostat et bien fermer la porte.",
+      dishTitle: "Lave-vaisselle IKEA",
+      dishText: "Insérer la pastille. Programme recommandé : ECO (économise l'eau et l'énergie).",
+      laundry: "Lave-linge HiSense",
+      laundryText: "1. Ajouter lessive. 2. Quick/Daily 30/40°C. 3. Démarrer. Alerte : attendre 2 min à la fin avant d'ouvrir la porte.",
+      climate: "Contrôle Environnemental",
+      acTitle: "Climatisation",
+      acText: "Éteindre la clim en sortant et garder les fenêtres fermées. Refroidit très vite !",
+      heatTitle: "Chauffage Intelligent",
+      heatText: "Géré par thermostat mural Wi-Fi. 20°C recommandé pour une efficacité optimale.",
+      waste: "Gestion des Déchets",
+      wasteText: "Tri obligatoire (Porte à Porte). Respectez les horaires.",
+      wYellow: "Plastique & Métal",
+      wBlue: "Papier & Carton",
+      wBrown: "Organique",
+      wGrey: "Déchets non recyclables",
+      wGreen: "Verre (Conteneurs de rue)",
+      checkoutTitle: "Déconnexion & Départ",
+      checkoutTime: "Check-out : 10:00",
+      c1: "Tout éteindre : Lumières, Clim, Gaz.",
+      c2: "Jeter toutes les poubelles.",
+      c3: "Pas de vaisselle sale (lancer machine).",
+      c4: "Laisser les clés et bien fermer la porte."
+    }
+  };
+
+  const t = data[lang];
+
+  // Componenti UI riutilizzabili
+  const Card = ({ children, className = "" }) => (
+    <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}>
+      {children}
+    </div>
+  );
+
+  const StatusBadge = () => (
+    <div className="flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-semibold w-fit ml-auto mb-4 border border-green-100">
+      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+      {t.online}
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-800 font-sans p-4 md:p-8 pb-16">
+      
+      {/* Selettore Lingua con Bandiere */}
+      <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+        {Object.keys(data).map((k) => (
+          <button
+            key={k}
+            onClick={() => setLang(k)}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold transition-all transform active:scale-95 ${
+              lang === k 
+                ? 'bg-blue-600 text-white shadow-lg scale-105' 
+                : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
+            }`}
+          >
+            <span className="text-xl leading-none">{data[k].flag}</span>
+            <span className="text-sm uppercase tracking-tight">{data[k].langName}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="max-w-4xl mx-auto space-y-6">
+        
+        {/* HEADER / WELCOME */}
+        <div className="text-center mb-10">
+          <h1 className="text-xs font-black tracking-[0.2em] text-blue-500 uppercase mb-2">HOME OPERATING SYSTEM</h1>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">{t.title}</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg">{t.welcomeText}</p>
+        </div>
+
+        {/* GRID PRINCIPALE */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          {/* Rete & Supporto */}
+          <Card>
+            <StatusBadge />
+            <div className="flex flex-col items-center mb-6 text-blue-600">
+              <Wifi size={48} strokeWidth={1.5} />
+            </div>
+            <h3 className="text-lg font-bold mb-4 text-center">{t.network}</h3>
+            <div className="space-y-3">
+              <div className="bg-gray-50 p-4 rounded-xl flex justify-between items-center border border-gray-100">
+                <span className="text-xs font-bold text-gray-400 uppercase">{t.ssid}</span>
+                <span className="font-mono font-bold text-gray-800">HUAWEI-B535-5G-FCB3-S1</span>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-xl flex justify-between items-center border border-gray-100">
+                <span className="text-xs font-bold text-gray-400 uppercase">{t.pass}</span>
+                <span className="font-mono font-bold text-gray-800">6T3EMBN6DQB</span>
+              </div>
+            </div>
+            <div className="mt-6 pt-6 border-t border-gray-100 text-center">
+              <Phone size={24} className="mx-auto text-blue-400 mb-2" />
+              <p className="text-sm text-gray-500 mb-2 leading-tight">{t.supportText}</p>
+              <p className="font-black text-xl text-gray-900 tracking-tight">+39 339 5087631</p>
+            </div>
+          </Card>
+
+          {/* Allerta 3kW */}
+          <Card className="border-red-200 bg-red-50/50 relative overflow-hidden ring-4 ring-red-500/10">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-red-600"></div>
+            <div className="flex items-center gap-3 mb-4 text-red-700">
+              <AlertTriangle size={28} className="shrink-0" />
+              <h3 className="font-black text-xl leading-tight uppercase italic">{t.alertTitle}</h3>
+            </div>
+            <p className="text-sm font-medium text-red-900 mb-6">{t.alertText}</p>
+            
+            <div className="bg-white p-5 rounded-2xl border border-red-200 shadow-sm text-center">
+              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Concurrency Matrix</p>
+              <div className="flex items-center justify-center gap-5 text-gray-400">
+                 <Microwave size={36} /> 
+                 <span className="text-2xl font-light text-gray-300">+</span> 
+                 <WashingMachine size={36} /> 
+                 <span className="text-2xl font-light text-gray-300">=</span> 
+                 <div className="flex flex-col items-center">
+                    <Power size={24} className="text-red-600 animate-pulse" />
+                    <span className="text-red-700 font-black text-[10px] uppercase mt-1 leading-none">{t.overload}</span>
+                 </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Climatizzazione */}
+          <Card>
+            <StatusBadge />
+            <h3 className="text-lg font-bold mb-6 text-center tracking-tight">{t.climate}</h3>
+            <div className="space-y-6">
+              <div className="flex gap-4 items-start group">
+                <div className="bg-blue-50 p-4 rounded-2xl text-blue-500 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <Wind size={24} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-800 text-base">{t.acTitle}</h4>
+                  <p className="text-sm text-gray-500 leading-snug">{t.acText}</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start group">
+                <div className="bg-orange-50 p-4 rounded-2xl text-orange-500 shrink-0 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                  <Thermometer size={24} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-800 text-base">{t.heatTitle}</h4>
+                  <p className="text-sm text-gray-500 leading-snug mb-2">{t.heatText}</p>
+                  <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-4 py-1.5 rounded-full text-sm font-black border border-orange-200">
+                    Target: 20°C (68°F)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Cucina e Conservazione */}
+          <Card>
+            <h3 className="text-lg font-bold mb-6 text-center tracking-tight">{t.cooking} & {t.cleaning}</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-gray-50 p-4 rounded-2xl text-center border border-transparent hover:border-gray-200 transition-all">
+                <Flame size={28} className="mx-auto mb-2 text-orange-500" />
+                <h4 className="font-bold text-sm mb-1">{t.stoveTitle}</h4>
+                <p className="text-[10px] leading-tight text-gray-500">{t.stoveText}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-2xl text-center border border-transparent hover:border-gray-200 transition-all">
+                <Microwave size={28} className="mx-auto mb-2 text-indigo-500" />
+                <h4 className="font-bold text-sm mb-1">{t.microTitle}</h4>
+                <p className="text-[10px] leading-tight text-gray-500">{t.microText}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-2xl text-center border border-transparent hover:border-gray-200 transition-all">
+                <Refrigerator size={28} className="mx-auto mb-2 text-cyan-500" />
+                <h4 className="font-bold text-sm mb-1">{t.fridgeTitle}</h4>
+                <p className="text-[10px] leading-tight text-gray-500">{t.fridgeText}</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-2xl text-center border border-green-100 shadow-inner">
+                <Droplet size={28} className="mx-auto mb-2 text-green-600" />
+                <h4 className="font-bold text-sm text-green-800 mb-1">{t.dishTitle}</h4>
+                <p className="text-[10px] leading-tight text-green-700">{t.dishText}</p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Lavatrice & Macchina Caffè */}
+          <Card className="flex flex-col justify-between">
+             <div className="mb-6">
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-3"><WashingMachine className="text-blue-500" size={32}/> {t.laundry}</h3>
+                <p className="text-sm text-gray-600 bg-blue-50 p-4 rounded-2xl border border-blue-100 italic leading-relaxed">{t.laundryText}</p>
+             </div>
+             <div>
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-3"><Coffee className="text-amber-800" size={32}/> {t.beverage}</h3>
+                <div className="space-y-3">
+                  <div className="bg-amber-50/50 p-3 rounded-xl">
+                    <p className="text-xs font-bold text-amber-900 uppercase mb-1">{t.coffeeTitle}</p>
+                    <p className="text-sm text-amber-800 leading-tight">{t.coffeeText}</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-xl">
+                    <p className="text-xs font-bold text-gray-500 uppercase mb-1">{t.kettleTitle}</p>
+                    <p className="text-sm text-gray-600 leading-tight">{t.kettleText}</p>
+                  </div>
+                </div>
+             </div>
+          </Card>
+
+          {/* Rifiuti */}
+          <Card>
+            <div className="flex items-center gap-3 mb-4 text-gray-800">
+              <Recycle size={32} className="text-green-600" />
+              <h3 className="font-black text-xl tracking-tight uppercase">{t.waste}</h3>
+            </div>
+            <p className="text-sm font-medium text-gray-500 mb-6">{t.wasteText}</p>
+            
+            <div className="grid grid-cols-1 gap-2.5">
+              <div className="flex items-center gap-3 p-3 bg-yellow-50 text-yellow-800 rounded-xl font-bold text-sm border border-yellow-100">
+                <div className="w-5 h-5 bg-yellow-400 rounded-md shadow-sm"></div> {t.wYellow}
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-blue-50 text-blue-800 rounded-xl font-bold text-sm border border-blue-100">
+                <div className="w-5 h-5 bg-blue-400 rounded-md shadow-sm"></div> {t.wBlue}
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-amber-50 text-amber-800 rounded-xl font-bold text-sm border border-amber-100">
+                <div className="w-5 h-5 bg-amber-600 rounded-md shadow-sm"></div> {t.wBrown}
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-gray-100 text-gray-700 rounded-xl font-bold text-sm border border-gray-200">
+                <div className="w-5 h-5 bg-gray-400 rounded-md shadow-sm"></div> {t.wGrey}
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-green-50 text-green-800 rounded-xl font-bold text-sm border border-green-100">
+                <div className="w-5 h-5 bg-green-500 rounded-md shadow-sm"></div> {t.wGreen}
+              </div>
+            </div>
+          </Card>
+
+        </div>
+
+        {/* CHECKOUT / LOGOUT */}
+        <div className="bg-gray-950 text-white rounded-[2.5rem] p-10 mt-12 text-center shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600 opacity-10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+          <Lock size={40} className="mx-auto mb-6 text-blue-500" />
+          <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">{t.checkoutTitle}</h2>
+          <div className="inline-block bg-white/10 px-8 py-3 rounded-full text-2xl font-black mb-10 border border-white/20 backdrop-blur-sm">
+            {t.checkoutTime}
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
+            <div className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+              <CheckCircle2 className="text-green-400 shrink-0" size={24} />
+              <span className="text-base font-medium text-gray-200">{t.c1}</span>
+            </div>
+            <div className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+              <CheckCircle2 className="text-green-400 shrink-0" size={24} />
+              <span className="text-base font-medium text-gray-200">{t.c2}</span>
+            </div>
+            <div className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+              <CheckCircle2 className="text-green-400 shrink-0" size={24} />
+              <span className="text-base font-medium text-gray-200">{t.c3}</span>
+            </div>
+            <div className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+              <CheckCircle2 className="text-green-400 shrink-0" size={24} />
+              <span className="text-base font-medium text-gray-200">{t.c4}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default App;
